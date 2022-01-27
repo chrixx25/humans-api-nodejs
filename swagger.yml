@@ -1,0 +1,112 @@
+swagger: '2.0'
+info:
+  description: CRUD API of human documents
+  version: 1.0.0
+  title: Humans API
+host: localhost
+basePath: /api
+schemes:
+ - http
+paths:
+  /human:
+    post:
+      tags:
+      - Humans
+      summary: Create a human document
+      operationId: create-human
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+        - in: body
+          name: Human
+          description: Human Record Details
+          schema:
+            type: object
+            required:
+              - name
+              - email
+            properties:
+              name:
+                type: string
+              email:
+                type: string
+      responses:
+        201:
+          description: Document Created
+        400:
+          description: Input Error
+  /humans:
+    get:
+      tags:
+      - Humans
+      summary: Retrieve human collection
+      operationId: read-humans
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Collection Retrieved
+  /human/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        description: Human record ID
+        type: integer
+        format: int32
+        minimum: 1
+    get:
+      tags:
+      - Humans
+      summary: Retrieve human document
+      operationId: read-human
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Document Retrieved
+        404:
+          description: Document Not Found
+    put:
+      tags:
+      - Humans
+      summary: Update a human document
+      operationId: update-human
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+        - in: body
+          name: Human
+          description: Human Record Details
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              email:
+                type: string
+      responses:
+        200:
+          description: Document Updated
+        400:
+          description: Input Error
+        404:
+          description: Document Not Found
+    delete:
+      tags:
+      - Humans
+      summary: Delete a human document
+      operationId: delete-human
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Document Deleted
+        404:
+          description: Document Not Found
