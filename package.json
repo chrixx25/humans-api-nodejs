@@ -2,9 +2,9 @@
   "name": "humans-api-nodejs",
   "version": "1.0.0",
   "description": "## Instructions 1. Create a simple RESTful CRUD API using the NodeJS Express framework that will implement the service as described in the Swagger file (swagger.yml). 2. The framework must dynamically load the Swagger file to create its routes. You can load the Swagger file through https://editor.swagger.io to understand the API requirements. 3. Feel free to add more properties in the Swagger file using the `x-*` notation to suit your needs (ie. routing requests to controllers and actions). 4. You can use the provided package.json file to start off your project. 5. Make a public fork of this repository and email the link to info@pragmanila.com.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
