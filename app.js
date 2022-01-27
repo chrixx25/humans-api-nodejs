@@ -12,6 +12,6 @@ con.on('error', () => console.log('error in mongodb.'));
 app.use(express.json());
 
 const humanRouter = require('./routes/human');
-app.use('/api/human', humanRouter);
+app.use('/api', humanRouter);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
