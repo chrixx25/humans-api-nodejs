@@ -5,7 +5,6 @@ const Joi = require('joi');
 
 const getHuman = async (req, res, next) => {
     let human;
-
     if (req.params.id.length !== 24) return res.status(404).send('Invalid id.');
     try {
         human = await Human.findById(req.params.id);
@@ -15,6 +14,27 @@ const getHuman = async (req, res, next) => {
     }
     res.human = human;
     next();
+}
+
+const validateHuman = (human) => {
+    const schema = Joi.object({
+        name: Joi.string().required(),
+        email: Joi.string().required()
+        // .custom((value, helper) => {
+        //     if (existingHuman) {
+        //         if (existingHuman.email == value) {
+        //             return value;
+        //         }
+        //     }
+        //     try {
+        //         const emailExists = await Human.find({ email: value });
+        //         if (emailExists.length > 0) return helper.message(`${human.email} email already exists.`);
+        //     } catch (error) {
+        //         return helper.message(`Error ${error}.`);
+        //     }
+        // })
+    });
+    return schema.validate(human);
 }
 
 router.get('/human/', async (req, res) => {
@@ -31,12 +51,16 @@ router.get('/human/:id', getHuman, (req, res) => {
 });
 
 router.post('/human/', async (req, res) => {
-    const human = new Human({
-        name: req.body.name,
-        email: req.body.email
-    });
-
+    const { error } = validateHuman(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
     try {
+        const { name, email } = req.body
+        const human_exists = await Human.find({ email });
+        if (human_exists.length > 0) {
+            res.status(400).send(`Email ${req.body.email} is already exists.`);
+            return;
+        }
+        const human = new Human({ name, email });
         const new_human = await human.save();
         res.status(201).json(new_human);
     } catch (error) {
@@ -45,10 +69,21 @@ router.post('/human/', async (req, res) => {
 });
 
 router.put('/human/:id', getHuman, async (req, res) => {
+    const { error } = validateHuman(req.body, res.human);
+    if (error) return res.status(400).send(error.details[0].message);
+
     try {
+        const { name, email } = req.body;
         const human = res.human;
-        if (human.name) human.name = req.body.name;
-        if (human.email) human.email = req.body.email;
+        if (email !== human.email) {
+            const human_exists = await Human.find({ email });
+            if (human_exists.length > 0) {
+                res.status(400).send(`Email ${req.body.email} is already exists.`);
+                return;
+            }
+        }
+        human.name = name;
+        human.email = email;
         const updated_human = await human.save();
         res.json(updated_human);
     } catch (error) {
