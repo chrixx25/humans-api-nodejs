@@ -1,23 +1,22 @@
 swagger: '2.0'
 info:
-  description: CRUD API of human documents
+  description: CRUD API of humans documents
   version: 1.0.0
   title: Humans API
-host: localhost
+host: localhost:3000
 basePath: /api
-schemes:
- - http
+schemes: [http]
 paths:
   /human:
     post:
       tags:
-      - Humans
+        - Humans
       summary: Create a human document
       operationId: create-human
       consumes:
-      - application/json
+        - application/json
       produces:
-      - application/json
+        - application/json
       parameters:
         - in: body
           name: Human
@@ -40,11 +39,11 @@ paths:
   /humans:
     get:
       tags:
-      - Humans
+        - Humans
       summary: Retrieve human collection
       operationId: read-humans
       produces:
-      - application/json
+        - application/json
       responses:
         200:
           description: Collection Retrieved
@@ -54,16 +53,20 @@ paths:
         name: id
         required: true
         description: Human record ID
-        type: integer
-        format: int32
-        minimum: 1
+        #type: integer
+        #format: int32
+        #minimum: 1
+        type: string
+        format: string
+        minimum: 24
+        maximum: 24
     get:
       tags:
-      - Humans
+        - Humans
       summary: Retrieve human document
       operationId: read-human
       produces:
-      - application/json
+        - application/json
       responses:
         200:
           description: Document Retrieved
@@ -71,13 +74,13 @@ paths:
           description: Document Not Found
     put:
       tags:
-      - Humans
+        - Humans
       summary: Update a human document
       operationId: update-human
       consumes:
-      - application/json
+        - application/json
       produces:
-      - application/json
+        - application/json
       parameters:
         - in: body
           name: Human
@@ -98,13 +101,13 @@ paths:
           description: Document Not Found
     delete:
       tags:
-      - Humans
+        - Humans
       summary: Delete a human document
       operationId: delete-human
       consumes:
-      - application/json
+        - application/json
       produces:
-      - application/json
+        - application/json
       responses:
         200:
           description: Document Deleted
