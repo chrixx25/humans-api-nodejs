@@ -19,7 +19,7 @@ const getHuman = async (req, res, next) => {
 const validateHuman = (human) => {
     const schema = Joi.object({
         name: Joi.string().required(),
-        email: Joi.string().required()
+        email: Joi.string().required().email()
         // .custom((value, helper) => {
         //     if (existingHuman) {
         //         if (existingHuman.email == value) {
