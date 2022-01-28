@@ -37,7 +37,7 @@ const validateHuman = (human) => {
     return schema.validate(human);
 }
 
-router.get('/human/', async (req, res) => {
+router.get('/humans/', async (req, res) => {
     try {
         const human = await Human.find();
         res.json(human);
@@ -102,3 +102,4 @@ router.delete('/human/:id', getHuman, async (req, res) => {
 });
 
 module.exports = router;
+
