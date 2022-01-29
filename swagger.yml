@@ -53,9 +53,6 @@ paths:
         name: id
         required: true
         description: Human record ID
-        #type: integer
-        #format: int32
-        #minimum: 1
         type: string
         format: string
         minimum: 24

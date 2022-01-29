@@ -8,7 +8,7 @@ const getHuman = async (req, res, next) => {
     if (req.params.id.length !== 24) return res.status(404).send('Invalid id.');
     try {
         human = await Human.findById(req.params.id);
-        if (!human) return res.status(404).send('Cannot find human.');
+        if (!human) return res.status(404).send('Document Not Found.');
     } catch (error) {
         return res.status(500).send(`Error ${error}.`);
     }
@@ -40,14 +40,14 @@ const validateHuman = (human) => {
 router.get('/humans/', async (req, res) => {
     try {
         const human = await Human.find();
-        res.json(human);
+        res.status(200).json(human);
     } catch (error) {
         return res.status(500).send(`Error ${error}.`);
     }
 });
 
 router.get('/human/:id', getHuman, (req, res) => {
-    res.json(res.human);
+    res.status(200).json(res.human);
 });
 
 router.post('/human/', async (req, res) => {
